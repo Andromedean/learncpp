@@ -1,3 +1,55 @@
+libraries, libs
+static libs: .a     (.lib in windows)
+dynamic libs: .so   (.dll in windows)
+
+compile, compiling, compilation
+$g++ -o <compiled_name> <.cpp>
+-ggdb     //when debugging
+-DNDEBUG  // to define ndebug got release builds
+-pedantic-errors  // disable compiler extensions
+-Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion  // max warnings
+-Werror  // treat warnings as errors
+-std=c++11, -std=c++14, -std=c++17, or -std=c++20  // select version
+
+variable initialization
+int a; // no initializer (default initialization)
+int b = 5; // initializer after equals sign (copy initialization)
+int c( 6 ); // initializer in parenthesis (direct initialization)
+// List initialization methods (C++11) (preferred)
+int d { 7 }; // initializer in braces (direct list initialization)
+int e = { 8 }; // initializer in braces after equals sign (copy list initialization)
+int f {}; // initializer is empty braces (value initialization)
+[[maybe_unused]] int x { 5 };  // prevents unused var warning
+
+main()
+returns status code/exit code
+EXIT_SUCCESS, EXIT_FAILURE
+
+unnamed parameter
+When a function parameter exists but is not used in the body of the function, do not give it a name
+You can optionally put a name inside a comment though
+void doSomething(int /*count*/)
+
+defintions, declarations
++---------------+----------------------------------------------+-------------------------------+
+| Term          | Definition                                   | Examples                      |
++---------------+----------------------------------------------+-------------------------------+
+| Definition    | Implements a function or instantiates a      | void foo() { } // function    |
+|               | variable. Definitions are also declarations. | definition                    |
+|               |                                              | int x; // variable definition |
++---------------+----------------------------------------------+-------------------------------+
+| Declaration   | Tells compiler about an identifier.          | void foo(); // function       |
+|               | Does not create the object or function.      | declaration                   |
+|               |                                              | int x; // variable            |
+|               |                                              | declaration                   |
++---------------+----------------------------------------------+-------------------------------+
+| Pure          | A declaration that isn't a definition.       | void foo();                   |
+| declaration   |                                              |                               |
++---------------+----------------------------------------------+-------------------------------+
+| Initializer   | Provides an initial value for a defined      | int x { 2 }; // 2 is the      |
+|               | object.                                      | initializer                   |
++---------------+----------------------------------------------+-------------------------------+
+
 assert
 #include <cassert>
 assert(<boolean <~&& "message">>);
