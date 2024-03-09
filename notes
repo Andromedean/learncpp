@@ -79,3 +79,17 @@ checked at compile-time: failing causes compilation to fail
   condition must be a constant expression
 can be placed anywhere in the code file (even in the global namespace)
 not compiled out in release builds (regardless of NDEBUG being defined?)
+
+implicit, automatic type conversion, coercion
+done by the compiler
+  eg: double d{ 3 }; // int value 3 implicitly converted to type double
+brace initialization disallows conversion with loss
+  eg: int x { 3.5 }; // brace-initialization disallows conversions that result in data loss
+
+numeric promotion
+All numeric promotions are value-preserving, which means that the converted value will always
+be equal to the source value (it will just have a different type)
+Since all values of the source type can be precisely represented in the destination type,
+value-preserving conversions are said to be “safe conversions”
+eg: char to double or int
+may not preserve signedness of the type
