@@ -49,6 +49,14 @@ defintions, declarations
 | Initializer   | Provides an initial value for a defined      | int x { 2 }; // 2 is the      |
 |               | object.                                      | initializer                   |
 +---------------+----------------------------------------------+-------------------------------+
+The one definition rule (or ODR for short) is a well-known rule in C++. The ODR has three parts:
+1 Within a given file, a function, variable, type, or template can only have one definition.
+2 Within a given program, a variable or normal function can only have one definition. This distinction is
+  made because programs can have more than one file.
+3 Types, templates, inline functions, and inline variables are allowed to have identical definitions in different files
+if declared
+  if defined in same file: compiler connects
+  else                   : linker connects
 
 assert
 #include <cassert>
