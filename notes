@@ -13,7 +13,9 @@ Because of this, asserts should be used only in cases where corruption isn’t l
 
 static assert
 keyword so no include needed
+static_assert(<condition>, <~diagnostic_message>)
+eg: static_assert(sizeof(long) == 8, "long must be 8 bytes");
 checked at compile-time: failing causes compilation to fail
   condition must be a constant expression
 can be placed anywhere in the code file (even in the global namespace)
-static_assert(<condition>, <~diagnostic_message>)
+not compiled out in release builds (regardless of NDEBUG being defined?)
