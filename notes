@@ -1,0 +1,95 @@
+libraries, libs
+static libs: .a     (.lib in windows)
+dynamic libs: .so   (.dll in windows)
+
+compile, compiling, compilation
+$g++ -o <compiled_name> <.cpp>
+-ggdb     //when debugging
+-DNDEBUG  // to define ndebug got release builds
+-pedantic-errors  // disable compiler extensions
+-Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion  // max warnings
+-Werror  // treat warnings as errors
+-std=c++11, -std=c++14, -std=c++17, or -std=c++20  // select version
+
+variable initialization
+int a; // no initializer (default initialization)
+int b = 5; // initializer after equals sign (copy initialization)
+int c( 6 ); // initializer in parenthesis (direct initialization)
+// List initialization methods (C++11) (preferred)
+int d { 7 }; // initializer in braces (direct list initialization)
+int e = { 8 }; // initializer in braces after equals sign (copy list initialization)
+int f {}; // initializer is empty braces (value initialization)
+[[maybe_unused]] int x { 5 };  // prevents unused var warning
+
+main()
+returns status code/exit code
+EXIT_SUCCESS, EXIT_FAILURE
+
+unnamed parameter
+When a function parameter exists but is not used in the body of the function, do not give it a name
+You can optionally put a name inside a comment though
+void doSomething(int /*count*/)
+
+defintions, declarations
++---------------+----------------------------------------------+-------------------------------+
+| Term          | Definition                                   | Examples                      |
++---------------+----------------------------------------------+-------------------------------+
+| Definition    | Implements a function or instantiates a      | void foo() { } // function    |
+|               | variable. Definitions are also declarations. | definition                    |
+|               |                                              | int x; // variable definition |
++---------------+----------------------------------------------+-------------------------------+
+| Declaration   | Tells compiler about an identifier.          | void foo(); // function       |
+|               | Does not create the object or function.      | declaration                   |
+|               |                                              | int x; // variable            |
+|               |                                              | declaration                   |
++---------------+----------------------------------------------+-------------------------------+
+| Pure          | A declaration that isn't a definition.       | void foo();                   |
+| declaration   |                                              |                               |
++---------------+----------------------------------------------+-------------------------------+
+| Initializer   | Provides an initial value for a defined      | int x { 2 }; // 2 is the      |
+|               | object.                                      | initializer                   |
++---------------+----------------------------------------------+-------------------------------+
+The one definition rule (or ODR for short) is a well-known rule in C++. The ODR has three parts:
+1 Within a given file, a function, variable, type, or template can only have one definition.
+2 Within a given program, a variable or normal function can only have one definition. This distinction is
+  made because programs can have more than one file.
+3 Types, templates, inline functions, and inline variables are allowed to have identical definitions in different files
+if declared
+  if defined in same file: compiler connects
+  else                   : linker connects
+
+assert
+#include <cassert>
+assert(<boolean <~&& "message">>);
+  boolean may &&ed with a string since string literals evaluate to true to include with
+If the conditional expression evaluates to false, an error message is displayed and the program is terminated (via std::abort)
+This error message typically contains the expression that failed as text, along with the name of the code file and the line number of the assertion
+Use to document cases that should be logically impossible
+  Sometimes used as standins for unimplemented cases
+~ should not appear in prod code:
+    if NDEBUG is defined, asserts will not be compiled in
+abort() function terminates the program immediately, without a chance to do any further cleanup (e.g. close a file or database)
+Because of this, asserts should be used only in cases where corruption isn’t likely to occur if the program terminates unexpectedly
+
+static assert
+keyword so no include needed
+static_assert(<condition>, <~diagnostic_message>)
+eg: static_assert(sizeof(long) == 8, "long must be 8 bytes");
+checked at compile-time: failing causes compilation to fail
+  condition must be a constant expression
+can be placed anywhere in the code file (even in the global namespace)
+not compiled out in release builds (regardless of NDEBUG being defined?)
+
+implicit, automatic type conversion, coercion
+done by the compiler
+  eg: double d{ 3 }; // int value 3 implicitly converted to type double
+brace initialization disallows conversion with loss
+  eg: int x { 3.5 }; // brace-initialization disallows conversions that result in data loss
+
+numeric promotion
+All numeric promotions are value-preserving, which means that the converted value will always
+be equal to the source value (it will just have a different type)
+Since all values of the source type can be precisely represented in the destination type,
+value-preserving conversions are said to be “safe conversions”
+eg: char to double or int
+may not preserve signedness of the type
