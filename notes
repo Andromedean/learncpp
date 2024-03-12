@@ -157,3 +157,9 @@ iii: Lossy conversions are potentially unsafe numeric conversions where some dat
 	double to float
 Remember that overflow is well-defined for unsigned values and produces undefined behavior for signed values
 
+narrowing conversion
+disallowed with list initialization
+use explicit cast
+if value is constexpr and fits in narrower type, will convert and compile
+	float types will convert if in range even if precision will be lost; may get compiler warning
+
