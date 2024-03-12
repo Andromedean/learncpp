@@ -163,3 +163,25 @@ use explicit cast
 if value is constexpr and fits in narrower type, will convert and compile
 	float types will convert if in range even if precision will be lost; may get compiler warning
 
+arithmetic conversion
+require their operands to be of the same type:
+	The binary arithmetic operators: +, -, *, /, %
+	The binary relational operators: <, >, <=, >=, ==, !=
+	The binary bitwise arithmetic operators: &, ^, |
+	The conditional operator ?: (excluding the condition, which is expected to be of type bool)
+The compiler has a ranked list of types that looks something like this:
+long double (highest rank)
+double
+float
+long long
+long
+int (lowest rank)
+The following rules are applied to find a matching type:
+	If one operand is an integral type and the other a floating point type, the integral operand is converted to the type of the floating point operand (no integral promotion takes place).
+	Otherwise, any integral operands are numerically promoted
+		If one operand is signed and the other unsigned, special rules apply:
+			If the rank of the unsigned operand is greater than the rank of the signed operand, the signed operand is converted to the type of the unsigned operand.
+			If the type of the signed operand can represent all the values of the type of the unsigned operand, the type of the unsigned operand is converted to the type of the signed operand.
+			Otherwise both operands are converted to the corresponding unsigned type of the signed operand.
+		Otherwise, the operand with lower rank is converted to the type of the operand with higher rank.
+~signed ints get converted to unsigned so unintuitive behavior occurs 
