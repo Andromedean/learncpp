@@ -58,6 +58,44 @@ if declared
   if defined in same file: compiler connects
   else                   : linker connects
 
+global namespace
+any name not in a class, function or namespace
+using:  i: <namespace>::<ider>
+        ii: using namespace <namespace>; ...<ider>...;
+
+conditional compilation
+#define <ID_NAME>
+#ifdef/#ifndef <ID_NAME>   ||  #if <0/1>
+...
+#endif
+if fails, code inside is not compiled
+
+preprocessor directives
+don't cause text substitution in each other, only normal code
+resolved top to bottom and file by file
+
+header files: .h, .hpp, no extension
+preferable place for documentation
+i:  header guard: TODO
+ii: declarations
+#include <file in include dirs>
+         || "search pwd first"
+add additional include path: $g++ -I/source/includes
+include order
+  paired header file
+  other ehaders from your project
+  3rd party library headers
+  standard library headers
+sort alphabetically unless documentution tells differently
+header guard, include guard
+  #ifndef SOME_UNIQUE_NAME
+  #define SOME_UNIQUE_NAME
+  // declarations and certain definitions
+  #endif
+  unique name: <PROJECT><PATH><FILE>H
+#pragma once
+  not officially part of c++ and can fail but is generally accpepted in modern c++
+
 assert
 #include <cassert>
 assert(<boolean <~&& "message">>);
