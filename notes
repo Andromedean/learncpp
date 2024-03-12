@@ -1,4 +1,4 @@
-libraries, libs
+#libraries, libs
 static libs: .a     (.lib in windows)
 dynamic libs: .so   (.dll in windows)
 
@@ -125,9 +125,35 @@ brace initialization disallows conversion with loss
   eg: int x { 3.5 }; // brace-initialization disallows conversions that result in data loss
 
 numeric promotion
+the type conversion of certain narrower numeric types (such as a char)
+to certain wider numeric types (typically int or double)
+that can be processed efficiently and is less likely to have a result that overflows
 All numeric promotions are value-preserving, which means that the converted value will always
 be equal to the source value (it will just have a different type)
 Since all values of the source type can be precisely represented in the destination type,
 value-preserving conversions are said to be “safe conversions”
-eg: char to double or int
 may not preserve signedness of the type
+float to double
+bool, char, signed char, unsigned char, signed short, and unsigned short
+all get promoted to int
+
+numeric conversion
+additional type conversions between fundamental types
+basic types
+i: an integral type to any other integral type (excluding integral promotions)
+ii: Converting a floating point type to any other floating point type (excluding floating point promotions)
+iii: Converting a floating point type to any integral type
+iv: Converting an integral type to any floating point type
+v: Converting an integral type or a floating point type to a bool
+safety categories
+i: Value-preserving conversions are safe numeric conversions where the destination type can
+precisely represent all the values in the source type
+can be converted back without loss
+	int to double
+ii: Reinterpretive conversions are potentially unsafe numeric conversions where the result may be outside the range of the source type. Signed/unsigned conversions fall into this category
+Values converted using a reinterpretive conversion can be converted back to the source type, resulting in a value equivalent to the original value (even if the initial conversion produced a value out of range of the source type)
+	signed int to unsigned int
+iii: Lossy conversions are potentially unsafe numeric conversions where some data may be lost during the conversion
+	double to float
+Remember that overflow is well-defined for unsigned values and produces undefined behavior for signed values
+
