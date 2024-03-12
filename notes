@@ -235,4 +235,8 @@ eg: const int x { 5 };  // x has type const int (compile-time const)
 	  auto y { x };       // y will be type int (const is dropped)
 	  constexpr auto z { x }; // z will be type constexpr int (constexpr is reapplied)
 string literals deduce to char* unless suffixed with s,sv
+may use as return type for functions; will not be able to forward declare
+auto foo() {}
+trailing return syntax
+auto foo() -> <type>;
 
