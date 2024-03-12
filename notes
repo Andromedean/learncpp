@@ -225,3 +225,14 @@ using int32_t = int;
 ii:
 using VectPairSI = std::vector<std::pair<std::string, int>>;
 
+type deduction, type inference, auto
+use auto keyword to deduce type when initializer is not empty and not void/incomplete
+eg: auto a { 3 };   auto b { 9u };
+modern consensus is that type deduction is generally safe to use for objects, and that doing so can help make your code more readable
+Use type deduction for your variables when the type of the object doesn’t matter
+drops cost/constexpr
+eg: const int x { 5 };  // x has type const int (compile-time const)
+	  auto y { x };       // y will be type int (const is dropped)
+	  constexpr auto z { x }; // z will be type constexpr int (constexpr is reapplied)
+string literals deduce to char* unless suffixed with s,sv
+
