@@ -199,3 +199,29 @@ c-style casting
 static casting
 	static_cast<<type>>(x)
 	less powerful than c style eg: can't strip const
+
+type alias 
+using <alias> = <type>;
+Use type aliases judiciously, when they provide a clear benefit to code readability or code maintenance
+may be templated
+alias convention that will be seen: _t and _type suffixes
+alias convention to use: <Alias> capitalize first letter, no suffix
+are not type safe so avoid mixing 
+typedef
+	typedef <type> <alias>
+	use type alias instead
+usecase
+i:
+consistent types for cross platform dev
+#ifdef INT_2_BYTES
+using int8_t = char;
+using int16_t = int;
+using int32_t = long;
+#else
+using int8_t = char;
+using int16_t = short;
+using int32_t = int;
+#endif
+ii:
+using VectPairSI = std::vector<std::pair<std::string, int>>;
+
