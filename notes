@@ -185,3 +185,17 @@ The following rules are applied to find a matching type:
 			Otherwise both operands are converted to the corresponding unsigned type of the signed operand.
 		Otherwise, the operand with lower rank is converted to the type of the operand with higher rank.
 ~signed ints get converted to unsigned so unintuitive behavior occurs 
+
+casting
+C++ supports 5 different types of casts:
+C-style casts, static casts, const casts, dynamic casts, and reinterpret casts
+the latter four are sometimes referred to as named casts
+avoid const and reinterpret
+c-style casting
+	(<type>)x
+	<type>(x)
+	may inadvertently static cast, reinterpret cast or const cast
+	avoid
+static casting
+	static_cast<<type>>(x)
+	less powerful than c style eg: can't strip const
