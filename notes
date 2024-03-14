@@ -279,6 +279,7 @@ template \<<typensame/class> T\> // template parameter declaration
 the following function or class template may use T as a type
 eg: template <typename T>
 		T max(T x, T y) {return (x < y) ? y : x;}
+		max<<type>>(a1, a2); // function template instantiation
 allows the compiler to generate a family of related functions or classes each with a different set of types
 function templates
 use type template parameters or template types for return type, parameter type or types used in the body
@@ -287,3 +288,9 @@ three types of template parameters
 2: Non-type template parameters (where the template parameter represents a constexpr value)
 3: Template template parameters (where the template parameter represents a template)
 template naming convention: T if obvious else Name or TName
+function template instantiation: "implicit instantiation" when done by a function call
+	called a function instance, instance, or template function
+effectively creates a new function with the given types
+template argument deduction: may empty <> or no <>
+	empty <>: will check overloads of only <deduced_type>
+	no <>: also checks non template overloads
