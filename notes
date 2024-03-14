@@ -273,3 +273,17 @@ default argument parameters must be to the right of non default parameters
 default parameters cannot be skipped (foo(arg a = x, arg b = y); foo(,z); // invalid)
 	place default argument parameters most likely to be given arguments leftmost
 cannot place default argument in multiple declarations/definitions: place in header declaration
+
+templates
+template \<<typensame/class> T\> // template parameter declaration
+the following function or class template may use T as a type
+eg: template <typename T>
+		T max(T x, T y) {return (x < y) ? y : x;}
+allows the compiler to generate a family of related functions or classes each with a different set of types
+function templates
+use type template parameters or template types for return type, parameter type or types used in the body
+three types of template parameters
+1: Type template parameters (where the template parameter represents a type)
+2: Non-type template parameters (where the template parameter represents a constexpr value)
+3: Template template parameters (where the template parameter represents a template)
+template naming convention: T if obvious else Name or TName
