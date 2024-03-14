@@ -240,3 +240,36 @@ auto foo() {}
 trailing return syntax
 auto foo() -> <type>;
 
+function overloading
+Functions can be overloaded so long as each overloaded function can be differentiated by the compiler
+	parameter type, parameter count
+	return type cannot be used to differentiate
+for member functions, may differentiate with const or volatile and ref-qualifiers
+compilers "mangle" (rename) the names of overloaded functions under the hood
+overload resolution - matching to the correct function
+	steps
+		1: look for an exact match or one with trivial conversions (non const to const, non reference to reference or vice versa)
+		2: numeric promotion and check match
+		3: numeric conversion and check match
+		4: try user defined conversions ("operator", constructors)
+		5: match ellipsis
+		6: compilation error
+ambiguous matches: scenarios such as when one data type can be converted to two different types which both have overloads
+	all conversions are equal: 0 will be ambiguous with float and unsigned int. so will 3.141
+	to resolve: make new overload, cast argument, or suffix argument
+for multiple parameters: a function is only chosen if it matches at least one argument better than any other
+deleting functions: disallows a function to be used
+	<return type> foo(<type>) = delete;
+	if selected in matching, gives compilation error
+	still will be able to cause ambiguous match
+delete all non matching overloads
+	// This function template will take precedence for arguments of other types
+	template <typename T>
+	void printInt(T x) = delete;
+
+default arguments
+type foo(arg a, arg b = x);
+default argument parameters must be to the right of non default parameters
+default parameters cannot be skipped (foo(arg a = x, arg b = y); foo(,z); // invalid)
+	place default argument parameters most likely to be given arguments leftmost
+cannot place default argument in multiple declarations/definitions: place in header declaration
