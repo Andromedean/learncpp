@@ -290,7 +290,29 @@ three types of template parameters
 template naming convention: T if obvious else Name or TName
 function template instantiation: "implicit instantiation" when done by a function call
 	called a function instance, instance, or template function
-effectively creates a new function with the given types
+compiler creates a new function with the given types
+functions implicitly instantiated from function templates are implicitly inline
+place template code (definitions) in header so compiler may use it to create instantiations
+may disallow certain types with declaration with certain type and = delete
+	eg: template <typename T>
+			T addOne(T x)
+			{return x + 1;}
+			template <>
+			const char* addOne(const char* x) = delete;
 template argument deduction: may empty <> or no <>
 	empty <>: will check overloads of only <deduced_type>
 	no <>: also checks non template overloads
+		preferred (if a non template overload exists, usually want to use it)
+may have non template parameters
+template <typename T>
+int someFcn (T, double) {}
+type conversion is done only when resolving function overloads, not when performing template argument deduction
+	so won't numerically convert 2 and 3.5 to use a T = double
+	only exact matches between the function call arguments and template type parameters
+	allow for cases in which to ensure multiple parameters have the same type
+	explicit type in <> will allow for conversions 
+multiple template types
+	may have multiple
+	if function may return more than one template type, may be a good case for "auto" return type 
+abbreviated function template (c++20)
+	auto max(auto x, auto y) {}
