@@ -1,3 +1,5 @@
+notes on the Go language: a personal reference not a guide
+
 packages
     every program is made of packages
     programs start running from the main package
@@ -48,9 +50,10 @@ types
     Printf(): %T will print type of the var provided
 zero values
     variables declared without an explicit initial value are given their zero value
-    0 for numeric types
-    false for the boolean type
-    "" (the empty string) for strings
+    numeric     0
+    bool        false
+    string      "" (empty string)
+    pointer     nil
 type conversion
     type(<var>)
     explicitely required when an assignment has different types
@@ -97,8 +100,24 @@ panic()
     stops execution of the current func, deferred funcs are executed, the current func returns
     causes the current func's surrounding func to panic as well
         propogates up the stack all funcs in the current goroutine have returned then crashes
-    Go convention is that libs using panic still presents explicit error ret val
+    Go convention is that packages in libs using panic still presents explicit error ret val
 recover()
     regains control of a panicking goroutine
     only useful inside a defferred func
-
+pointer
+    var <name> *<type>
+    *<var> dereference/indirect
+    &<var> generates a pointer
+    no pointer arithmetic
+struct
+    collection of fields
+    type <name> struct {
+        <fieldi> <typei>
+    }
+    initializing
+        s := <name>{<vali>}
+        s := <structName>{<Fieldi>: <val>} // to init a subset of fields
+    fields accessed using .
+        s.Fieldi
+    *struct pointer
+        may use structPtr.Field without explicitely dereferencing
