@@ -240,3 +240,79 @@ auto foo() {}
 trailing return syntax
 auto foo() -> <type>;
 
+function overloading
+Functions can be overloaded so long as each overloaded function can be differentiated by the compiler
+	parameter type, parameter count
+	return type cannot be used to differentiate
+for member functions, may differentiate with const or volatile and ref-qualifiers
+compilers "mangle" (rename) the names of overloaded functions under the hood
+overload resolution - matching to the correct function
+	steps
+		1: look for an exact match or one with trivial conversions (non const to const, non reference to reference or vice versa)
+		2: numeric promotion and check match
+		3: numeric conversion and check match
+		4: try user defined conversions ("operator", constructors)
+		5: match ellipsis
+		6: compilation error
+ambiguous matches: scenarios such as when one data type can be converted to two different types which both have overloads
+	all conversions are equal: 0 will be ambiguous with float and unsigned int. so will 3.141
+	to resolve: make new overload, cast argument, or suffix argument
+for multiple parameters: a function is only chosen if it matches at least one argument better than any other
+deleting functions: disallows a function to be used
+	<return type> foo(<type>) = delete;
+	if selected in matching, gives compilation error
+	still will be able to cause ambiguous match
+delete all non matching overloads
+	// This function template will take precedence for arguments of other types
+	template <typename T>
+	void printInt(T x) = delete;
+
+default arguments
+type foo(arg a, arg b = x);
+default argument parameters must be to the right of non default parameters
+default parameters cannot be skipped (foo(arg a = x, arg b = y); foo(,z); // invalid)
+	place default argument parameters most likely to be given arguments leftmost
+cannot place default argument in multiple declarations/definitions: place in header declaration
+
+templates
+template \<<typensame/class> T\> // template parameter declaration
+the following function or class template may use T as a type
+eg: template <typename T>
+		T max(T x, T y) {return (x < y) ? y : x;}
+		max<<type>>(a1, a2); // function template instantiation
+allows the compiler to generate a family of related functions or classes each with a different set of types
+function templates
+use type template parameters or template types for return type, parameter type or types used in the body
+three types of template parameters
+1: Type template parameters (where the template parameter represents a type)
+2: Non-type template parameters (where the template parameter represents a constexpr value)
+3: Template template parameters (where the template parameter represents a template)
+template naming convention: T if obvious else Name or TName
+function template instantiation: "implicit instantiation" when done by a function call
+	called a function instance, instance, or template function
+compiler creates a new function with the given types
+functions implicitly instantiated from function templates are implicitly inline
+place template code (definitions) in header so compiler may use it to create instantiations
+may disallow certain types with declaration with certain type and = delete
+	eg: template <typename T>
+			T addOne(T x)
+			{return x + 1;}
+			template <>
+			const char* addOne(const char* x) = delete;
+template argument deduction: may empty <> or no <>
+	empty <>: will check overloads of only <deduced_type>
+	no <>: also checks non template overloads
+		preferred (if a non template overload exists, usually want to use it)
+may have non template parameters
+template <typename T>
+int someFcn (T, double) {}
+type conversion is done only when resolving function overloads, not when performing template argument deduction
+	so won't numerically convert 2 and 3.5 to use a T = double
+	only exact matches between the function call arguments and template type parameters
+	allow for cases in which to ensure multiple parameters have the same type
+	explicit type in <> will allow for conversions 
+multiple template types
+	may have multiple
+	if function may return more than one template type, may be a good case for "auto" return type 
+abbreviated function template (c++20)
+	auto max(auto x, auto y) {}
