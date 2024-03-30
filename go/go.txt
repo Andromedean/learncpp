@@ -1,0 +1,55 @@
+packages
+    every program is made of packages
+    programs start running from the main package
+    by convention, the package name is the same as the last element of the import path
+exported names
+    a member is exported when its name starts with a capitalized letter
+    only exported names are available from imported packages
+functions
+parameters
+    func <funcName>(<arg0> <arg0Type>, ...) {}
+    parameters with the same type may omit the type on all but the last arg
+return results
+    may return any number of values
+named return values
+    may name return values and use them as declared variables
+    "naked return" automatically returns the values if named (only use in short funcs)
+    func split(sum int) (x, y int) {
+    	x = sum * 4 / 9
+    	y = sum - x
+    	return
+    }
+variables
+    var <name0> <type0>, <name1> <type1>, ... = <initializer1>, ...
+    may omit type (if same) until last variable
+    type may be ommitted if initializer present
+    may be package or function level
+    <name> := <initializer> // shorthand can use within functions
+        outside of a func, every statement begins with a keyword
+    may factored into blocks like with imports
+types
+    ---
+    bool
+    string
+    int  int8  int16  int32  int64
+    uint uint8 uint16 uint32 uint64 uintptr
+    byte // alias for uint8
+    rune // alias for int32
+         // represents a Unicode code point
+    float32 float64
+    complex64 complex128
+    ---
+    int, uint, uintptr are usually size n for n-bit systems
+    Printf(): %T will print type of the var provided
+zero values
+    variables declared without an explicit initial value are given their zero value
+    0 for numeric types
+    false for the boolean type
+    "" (the empty string) for strings
+type conversion
+    type(<var>)
+    explicitely required when an assignment has different types
+constants
+    const <name> = <value>
+numeric constants
+    are values and take on a type best for the sitution it is used in
