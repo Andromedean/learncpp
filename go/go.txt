@@ -5,6 +5,11 @@ packages
 exported names
     a member is exported when its name starts with a capitalized letter
     only exported names are available from imported packages
+factored blocks
+    import (
+        "fmt"
+        "net"
+    )
 functions
 parameters
     func <funcName>(<arg0> <arg0Type>, ...) {}
@@ -53,3 +58,47 @@ constants
     const <name> = <value>
 numeric constants
     are values and take on a type best for the sitution it is used in
+for
+    the only looping construct
+    for <init>; <condition>; <post> {
+    } // for
+    init, and post are optional: exclude them and the semicolons for a while loop
+while
+    for <condition> {}
+forever
+    for {}
+if
+    if <optional_init;> <condition> {}
+switch
+    switch <init;> <variable> {
+        case <>:
+        case <>:
+        default:
+    } // switch
+    cases need not be constants or ints
+        may be values, vars, expressions
+    cases do not fallthrough unless 'fallthrough' statement
+        ie implicit break
+    cases are evaluated top-to-bottom and stop executing once one succeeds
+    may use switch {} to condense long if-else chains
+defer
+    defer <func()>
+    defer func() { <statements> }()
+    runs at func's return in last-in-first-out order (stack)
+    deferred func's args are evaluated immediately though
+    deferred functions may read and assign to the returning function's named return values
+        executes after the surrounding statement returns
+        eg: returns 2
+        func c() (i int) {
+            defer func() { i++ }()
+            return 1
+        } // c()
+panic()
+    stops execution of the current func, deferred funcs are executed, the current func returns
+    causes the current func's surrounding func to panic as well
+        propogates up the stack all funcs in the current goroutine have returned then crashes
+    Go convention is that libs using panic still presents explicit error ret val
+recover()
+    regains control of a panicking goroutine
+    only useful inside a defferred func
+
