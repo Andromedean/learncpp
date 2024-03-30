@@ -1,0 +1,289 @@
+Imported from my notes on python in ~2021
+DATA TYPES
+f string f’ooga {var}’
+Division always gives a float. _ are ignored in numbers.
+non empty strings are True
+split() splits the words of a string into a list
+LIST
+list.append(var); lists.insert(0, 'var'); shifts all over right and inserts
+del list[i]; list.pop(); list.pop(i); pop() returns values
+list.remove(val); removes first instance of val
+list.copy()
+list.sort()/sort(reverse=true); sorted(list) returns a sorted list, does not affect og; list.reverse()
+len(list)
+min(list), max(list), sum(list)
+slicing: list[x:y]; may do [x:] or [:y] or even [:] for the whole list
+to slice the last 3 you can list[-3]
+a third value may be use for step size
+list1 = []; list2 = list1; list1 and list2 point to the same list
+tuples are immutable lists: tuple = (x,y)
+set or sets contain no duplicates. set(list) makes a list a set
+set = {x, y, z}
+FOR LOOPS
+for item in list:
+	method(item)
+RANGES
+for value in range(1,5):
+	print(value)
+#will print numbers 1, 2, 3, 4; it goes up to the second number
+may use range(x) and will go from 0 through x-1
+list(range(1,6))
+range(x,y,z) z is the step size
+LIST COMPREHENSIONS
+squares = [value**2 for value in range(1, 11)]
+instead of 
+squares = []
+for value in range(1,11):
+squares.append(value**2) 
+STYLING
+indents are 4 spaces. lines less than 80 chars and comments 72
+IF
+if x == y:
+	…
+elif x == z:
+	...
+else:
+	…
+==, !=, <, >, and, or, in, not it, 
+if x > y and y > z
+Booleans: True and False
+if list # returns false if list is empty
+
+class names should be written in CamelCase
+instances and module names should be written lowercase with underscores
+each class should have a docstring immediately following class definition
+modules should have docstrings describing the use of the classes
+one blank line between functions and two blank lines for classes
+standard library imports come first and separate with a blank line
+DICTIONARIES
+dictionary = {‘key’: ‘value’, ‘key2’: 2}
+print(dict[‘label1’])
+dict[‘h’] = ‘k’; del dict[‘h’]
+dict.get(‘x’, ‘there was no x’) # will return None if second param is left out
+for k, v in dict.items():
+	…
+for key in dict.keys(): # which is the default behavior if you did for k in dict:
+dict.values()
+USER INPUT
+input() takes a prompt parameter and returns the user input as a string
+use int(string) to convert to an int
+WHILE LOOPS
+while i <= x:
+	…
+break to ends any loop
+continue ends the current iteration of the loop
+while x in list:
+	list.remove(x)
+removes all instances of x from a list
+FUNCTIONS
+def function(x, y):
+“””Docstring used for generating documentation”””
+return x + y
+Positional Arguments: must match each argument in the call to a param in the def
+function(1, 2)
+Keyword Arguments: take name value pairs and don’t need specific order
+function(x = 1, y = 2)
+default value: def function( x, y=’1’):
+	default value parameters must be placed after ones without
+	def of call should have no spaces around the =
+may use def values for optional arguments: ‘’ or None
+lists are sent through functions as pointers
+def function(*x): # will make a tuple of the arbitrary number of passed arguments
+may mix parameters but *args must come last
+def function(arg1, *args):
+	…
+if **kwargs is used, it will create a dictionary for the passed arguments
+def function(**kwargs):
+	…
+if many parameters press enter and double tab after opening parenthesis
+def long_function(
+		param_0,
+		param_n):
+	…
+separate functions by 2 lines
+refactoring is reworking your code
+MODULES
+modules end in .py and that are in the same directory
+have docstring on line 1
+1
+import module # imports the whole module
+modules.function() to call the function
+2
+from module import function1, function2, functionN # imports specific functions
+function1() # do not need to use the dot notation for the module
+3
+import module as m
+from module import function as alias
+4
+from module import * # imports all functions
+
+classes are imported like functions:
+from module import Class
+CLASSES
+class Class:
+	“””Docstring”””
+
+	def __init__(self, param_1, param_n):
+		self.attribute_1 = param_1
+self.attribute_n = param_n
+self.attribute_nplus1 = ‘default value’
+
+	def function(self):
+		…
+
+	def get_attribute_1(self):
+		return attribute_1
+
+	def set_attribute_1(self, value):
+		self.attribute_1 = value
+
+my_class = Class(param_1, param_2)
+# self is passed automatically in calls
+my_class.attribute_1
+my_class.function()
+INHERITANCE
+parent/superclass - child/subclass
+parent class must be in the same file and appear before
+class Child(Parent):
+	def __init__(self, param_1, param_n):
+		super().__init__(param_1, param_n)
+		self.param_c1 = x
+
+	def function(self):
+		# this overrides the parents function
+
+can use classes as attributes in other classes
+helper methods do work inside a class but aren’t meant to be called through an instance
+FILES
+
+opening a file
+with open(‘text_files/file.txt’) as file:
+	contents = file.read()
+# with closes the file when the with block finishes
+# close() is the manual option
+
+with open(filename) as file_object:
+lines = file_object.readlines()
+for line in lines:
+print(line.rstrip())
+
+ with open(filename, 'w') as file_object:
+file_object.write("I love programming.")
+
+open has r, w, a, and r+ mode: read, write, append, and read and write
+open() creates the file if it does not exist
+open(‘’, ‘w’) will erase the contents of an existing file
+Python can only write str to a txt file
+
+with open(filename, 'a') as file_object:
+file_object.write(‘foo’)
+
+encoding='utf-8'
+EXCEPTIONS
+try:
+	…
+except SomeError:
+	…
+else:
+	…
+# else is for code that depends on the try block succeeding
+pass may be used in the except block to do nothing
+STORING DATA
+import json
+data = [x, y, z]
+file_name = ‘data.json’
+with open(file_name, ‘w’) as f:
+	json.dump(data, f)
+
+import json
+file_name = ‘data.json’
+with open(file_name) as f:
+	data = json.load(f)
+TESTING CODE
+module unittest
+unit test - verifies one specific aspect of a function
+test case - collection of unit tests that cover the full range
+Assert Methods:
+assertEqual(x, y)
+assertNotEqual(x, y)
+assertTrue(x)
+assertFalse(x)
+assertIn(item, list)
+assertNotIn(item, list)
+
+. - passed
+E - error from a test
+F - failed assertion
+
+FUNCTIONS
+write test case for a function: import unittest and the function; create a class that inherits from unittest.TestCase
+Any method that starts with test_ will be run automatically when we run test_name_function.py
+
+import unittest
+from name_function import get_formatted_name
+
+class NamesTestCase(unittest.TestCase):
+"""Tests for 'name_function.py'."""
+
+def test_first_last_name(self):
+"""Do names like 'Janis Joplin' work?"""
+formatted_name = get_formatted_name('janis', 'joplin')
+self.assertEqual(formatted_name, 'Janis Joplin')  
+
+	def test_first_last_middle_name(self):
+"""Do names like 'Wolfgang Amadeus Mozart' work?"""
+formatted_name = get_formatted_name( 
+'wolfgang', 'mozart', 'amadeus')
+self.assertEqual(formatted_name, 'Wolfgang Amadeus Mozart')
+
+if __name__ == '__main__':
+unittest.main()
+
+CLASSES
+
+import unittest
+from python_file import FooClass
+
+class TestFooClass(unittest.TestCase):
+	def test_case_of_fooclass(self):
+		class_instance = FooClass()
+		# testing code
+		self.assertX(x, y)
+
+	def test_another_case(self):
+		class_instance = FooClass()
+		# testing code
+		for x in list:
+			self.assertX(x, y)
+
+if __name__ == ‘__main__’:
+	unittest.main()
+
+setUp() - creates an instance of the class before running first which can be used in each test_
+
+import unittest
+from python_file import FooClass
+
+class TestFooClass(unittest.TestCase):
+	
+	def setUp(self):
+		self.instance = FooClass()
+		self.test_data = h
+
+def test_case_of_fooclass(self):
+		self.instance.function(self.h)
+		self.assertX(expected_output, self.instance.output)
+
+if __name__ == ‘__main__’:
+	unittest.main()
+GIT
+git init
+git status
+git add . # adds all files to repository
+git commit -m “message”
+git log # returns 40 char reference ID. may add --pretty=oneline
+git checkout . # restores the most recent commit
+git checkout <first 6 char of a reference ID> # enters detached HEAD
+git checkout master # goes back to master
+git reset --hard <first 6 char of a reference ID> # resets to a previous commit
+rm -rf .git #deletes the entire repository
