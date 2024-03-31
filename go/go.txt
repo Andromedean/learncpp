@@ -61,7 +61,7 @@ constants
     const <name> = <value>
 numeric constants
     are values and take on a type best for the sitution it is used in
-for
+for loop
     the only looping construct
     for <init>; <condition>; <post> {
     } // for
@@ -70,6 +70,16 @@ while
     for <condition> {}
 forever
     for {}
+range form of a for loop
+    for <index>, <copyOfElement> := range <slice/map> {
+        ... 
+    } // for
+    iterates over a slice or a map
+    may skip index or copyOfElement by replacing with '_'
+    for _, <e> := range ...
+    for <i>, _ := range ...
+    for <i> := range ...
+        or just omit e if only wanting i
 if
     if <optional_init;> <condition> {}
 switch
@@ -152,13 +162,40 @@ slices
         a slice and variable length of parameters of type T to append
         if the backing array is too small, a new array will be allocated
             the returned slice will refer to the new array
-range form of a for loop
-    for <index>, <copyOfElement> := range <slice/map> {
-        ... 
-    } // for
-    iterates over a slice or a map
-    may skip index or copyOfElement by replacing with '_'
-    for _, <e> := range ...
-    for <i>, _ := range ...
-    for <i> := range ...
-        or just omit e if only wanting i
+map
+    var m map[<keyType>]<valueType>
+        nil: no keys nor can they be added
+    m = make(map[<keyType>]<valueType>)
+        returns initialized map 
+    m[key] = v
+    v = m[key]
+    v, ok =/:= m[key]
+        if (m contains key) {
+            ok = true
+            v  = value
+        } else {
+            ok = false
+            v  = (nil of v's type)
+        } // if
+    delete(m, key)
+    map literals
+        var m = map[<kT>]<vT>{
+            k0: v0,
+            ...
+        } // map m
+    if top level type is just a type name, may omit it from elements of the literals
+        <=====================================
+        var m = map[string]Vertex{
+	        "Bell Labs": Vertex{
+		        40.68433, -74.39967,
+	        },
+	        "Google": Vertex{
+		        37.42202, -122.08408,
+	        },
+        }
+        ======================================
+        var m = map[string]Vertex{
+	        "Bell Labs": {40.68433, -74.39967},
+	        "Google":    {37.42202, -122.08408},
+        }
+        =====================================>
