@@ -121,3 +121,44 @@ struct
         s.Fieldi
     *struct pointer
         may use structPtr.Field without explicitely dereferencing
+arrays
+    [n]T    an n-valued array of type T
+    arr := [n]T{1, 2, ... , n}
+    length is part of the type so arrays cannot be resized
+slices
+    []T             a slice with elements of type T
+    arr[low:high]   [low,high)
+    dynamically sized flexible view into elements of an array
+    make
+        make([]T, <len>)
+        make([]T, <len>, <cap>)
+        allocates a zeroed array and returns a slice refering to that array
+    changing elements of a slice changes the elements of the array
+    may omit high and or low bounds which default to len and 0 
+    len(s): elements in the slice
+    cap(s): elements in the underlying array counting from the first of the slice
+    slice literal
+        []T{1, 2, ... , n}
+        creates an array then builds a slice that references it
+    zero value of nil
+        has len(s) and cap(s) of 0 and no underlying array
+    slices may contain other slices
+        sliceOfSlices := [][]T{
+            []T{...},
+            ...     
+        }
+    appending
+        append(s []T, vs ...T)
+        a slice and variable length of parameters of type T to append
+        if the backing array is too small, a new array will be allocated
+            the returned slice will refer to the new array
+range form of a for loop
+    for <index>, <copyOfElement> := range <slice/map> {
+        ... 
+    } // for
+    iterates over a slice or a map
+    may skip index or copyOfElement by replacing with '_'
+    for _, <e> := range ...
+    for <i>, _ := range ...
+    for <i> := range ...
+        or just omit e if only wanting i
