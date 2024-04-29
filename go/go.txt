@@ -137,7 +137,7 @@ arrays
     length is part of the type so arrays cannot be resized
 slices
     []T             a slice with elements of type T
-    arr[low:high]   [low,high)
+    arr[low:high]   // [low,high)
     dynamically sized flexible view into elements of an array
     make
         make([]T, <len>)
