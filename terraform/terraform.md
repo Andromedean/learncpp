@@ -19,3 +19,19 @@
 - [variables in terraform](https://developer.hashicorp.com/terraform/tutorials/configuration-language/variables)
 - terraform outputs: displays declared outputs
   - declared with output blocks
+## backend
+- specify with a ```backend block```
+- when changing backend config, must run ```terraform init``` again before any plan, applys, etc
+  - ```init``` creates a config in ```.terraform/```
+    - do not check this in to git
+    - this is separate from ```terraform.tfstate```
+  - when changing backends, terraform asks if you want to migrate state to the new backend
+    - backup current state before doing this
+- backend config file
+  - *.backendname.tfbackend
+  - uses top level attributes to specify
+```
+address = "demo.consul.io"
+path    = "example_app/terraform_state"
+scheme  = "https"
+```
