@@ -191,7 +191,7 @@ sliceOfSlices := [][]T{
 - m[key] = v
 - v = m[key]
 - v, ok =/:= m[key]
-```
+    ```
     if (m contains key) {
         ok = true
         v  = value
@@ -199,7 +199,7 @@ sliceOfSlices := [][]T{
         ok = false
         v  = (nil of v's type)
     } // if
-```
+    ```
 - delete(m, key)
 - map literals
     ```
@@ -209,59 +209,63 @@ sliceOfSlices := [][]T{
     } // map m
     ```
 - if top level type is just a type name, may omit it from elements of the literals
-        <=====================================
-        var m = map[string]Vertex{
-	        "Bell Labs": Vertex{
-		        40.68433, -74.39967,
-	        },
-	        "Google": Vertex{
-		        37.42202, -122.08408,
-	        },
-        }
-        ======================================
-        var m = map[string]Vertex{
-	        "Bell Labs": {40.68433, -74.39967},
-	        "Google":    {37.42202, -122.08408},
-        }
-        =====================================>
+    ```
+    var m = map[string]Vertex{
+        "Bell Labs": Vertex{
+            40.68433, -74.39967,
+        },
+        "Google": Vertex{
+            37.42202, -122.08408,
+        },
+    }
+    // vvv instead vvv
+    var m = map[string]Vertex{
+        "Bell Labs": {40.68433, -74.39967},
+        "Google":    {37.42202, -122.08408},
+    }
+    ```
 ## function values
-    functions themselves are values and can be passed around
-    eg:
-        func compute(fn func(float64, float64) float64) float64 {
-	        return fn(3, 4)
+- functions themselves are values and can be passed around
+- eg:
+    ```
+    func compute(fn func(float64, float64) float64) float64 {
+        return fn(3, 4)
+    }
+    
+    func main() {
+        hypot := func(x, y float64) float64 {
+            return math.Sqrt(x*x + y*y)
         }
-        
-        func main() {
-	        hypot := func(x, y float64) float64 {
-		        return math.Sqrt(x*x + y*y)
-	        }
-	        fmt.Println(hypot(5, 12))
-        
-	        fmt.Println(compute(hypot))
-	        fmt.Println(compute(math.Pow))
-        }
+        fmt.Println(hypot(5, 12))
+    
+        fmt.Println(compute(hypot))
+        fmt.Println(compute(math.Pow))
+    }
+    ```
 ## function closures
-    a closure is a function value that references variables outside its body
-    may access and assign to the variables: essentially bound to them
-    ~static variables in C?
-    eg: pos and neg each get their own sum variable: they are changed independently
-        func adder() func(int) int {
-	        sum := 0
-	        return func(x int) int {
-		        sum += x
-		        return sum
-	        }
+- a closure is a function value that references variables outside its body
+- may access and assign to the variables: essentially bound to them
+- ~static variables in C?
+- eg: pos and neg each get their own sum variable: they are changed independently
+    ```
+    func adder() func(int) int {
+        sum := 0
+        return func(x int) int {
+            sum += x
+            return sum
         }
-        
-        func main() {
-	        pos, neg := adder(), adder()
-	        for i := 0; i < 10; i++ {
-		        fmt.Println(
-			        pos(i),
-			        neg(-2*i),
-		        )
-	        }
+    }
+    
+    func main() {
+        pos, neg := adder(), adder()
+        for i := 0; i < 10; i++ {
+            fmt.Println(
+                pos(i),
+                neg(-2*i),
+            )
         }
+    }
+    ```
 ## method
     func (t Type) funcName() {}
         may use t in the method body
