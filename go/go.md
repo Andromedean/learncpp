@@ -1,6 +1,17 @@
 # Go
 notes on the Go language: a personal reference not a guide
-
+## oop concept mapping
+- static var in C# class => global var in Golang package
+- enum in C# => new package with enum name and const type of enum elements
+- class in OOP => struct type
+- class methods => struct with receiver methods
+- C#/Java abstract methods(pure virtual functions in C++) => interface methods like io.Reader
+- public => first letter Upper case Name
+- private => first letter lower case name
+- namespace => package name
+- inheritance => embedded struct and embedded interface
+- Thread => Go routines
+- lock => sync.Mutex
 ## packages
 - every program is made of packages
 - programs start running from the main package
@@ -341,25 +352,3 @@ switch <varName> := <interfaceVar>.(type) {
     default:
 } // switch
 ```
-
-
-
-
-
-
-
-
-
-
-oop map
-1: static var in C# class => global var in Golang package
-2: enum in C# => new package with enum name and const type of enum elements
-3: class in OOP => struct type
-4: class methods => struct with receiver methods
-5: C#/Java abstract methods(pure virtual functions in C++) => interface methods like io.Reader
-6: public => first letter Upper case Name
-7: private => first letter lower case name
-8: namespace => package name
-9: inheritance => embedded struct and embedded interface
-10: Thread => Go routines
-11: lock => sync.Mutex
