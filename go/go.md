@@ -295,14 +295,14 @@ sliceOfSlices := [][]T{
     v.Abs() // usable method
     ```
 ## interfaces, interface type
-    ```
-    type <Name> interface {
-        <MethodName> <methodType>
-    }
-    func (<t> *<ImplementingType>) <MethodName> () {
-        ...
-    }
-    ```
+```
+type <Name> interface {
+    <MethodName> <methodType>
+}
+func (<t> *<ImplementingType>) <MethodName> () {
+    ...
+}
+```
 - a set of method signatures
 - implicitly implemented: don't declare that an interface is implemented
 - a value of interface type can hold any value that implements those methods
@@ -334,13 +334,13 @@ sliceOfSlices := [][]T{
 - allows access to interfaces undelying value if it matches the argument
 - panics if the arg is not that type unless ask for boolean return type too
 ## type switches
-    ```
-    switch <varName> := <interfaceVar>.(type) {
-        case <Type0>:
-        case <Type1>:
-        default:
-    } // switch
-    ```
+```
+switch <varName> := <interfaceVar>.(type) {
+    case <Type0>:
+    case <Type1>:
+    default:
+} // switch
+```
 
 
 
