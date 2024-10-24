@@ -324,19 +324,23 @@ sliceOfSlices := [][]T{
 - holds value of any type
 - used when the code handles values of unknown type
 ## type assertions
-    foo := <InterfaceType>.(<SomeType>)     // panic assertion
-    foo, ok := <InterfaceType>.(<SomeType>) // non panic assertion
-    eg
-        var i interface{}
-        s := i.(int)
-    allows access to interfaces undelying value if it matches the argument
-    panics if the arg is not that type unless ask for boolean return type too
+- ```foo := <InterfaceType>.(<SomeType>)```     // panic assertion
+- ```foo, ok := <InterfaceType>.(<SomeType>)``` // non panic assertion
+- eg:
+    ```
+    var i interface{}
+    s := i.(int)
+    ```
+- allows access to interfaces undelying value if it matches the argument
+- panics if the arg is not that type unless ask for boolean return type too
 ## type switches
+    ```
     switch <varName> := <interfaceVar>.(type) {
-    case <Type0>:
-    case <Type1>:
-    default:
+        case <Type0>:
+        case <Type1>:
+        default:
     } // switch
+    ```
 
 
 
