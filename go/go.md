@@ -267,55 +267,62 @@ sliceOfSlices := [][]T{
     }
     ```
 ## method
-    func (t Type) funcName() {}
-        may use t in the method body
-    a function with a receiver
-    t can be struct or non struct type
-    must be declared in the same package as the type
-    pointer receivers allow the values of the type to be changed
-        most common to use pointer receivers so you can modify values
-        non-ptr doesn't since functions are all pass by value
-            ie it will make an entire copy of the type (even though it's being called on and not a parameter itself)
-        generally: type's methods should be all ptr or all non-ptr
-            can't make methods with the same name for t and *t
-    go automatically calls pointer receiver methods when calling on actual types
-        and conversly calls receiver methods for pointer types
-        specifically for receiver methods not for arguments
-    eg  type Vertex struct {
-	        X, Y float64
-        }
-        // type MyFloat float64     // non struct type
+- ```func (t Type) funcName() {}```
+    - may use t in the method body
+- a function with a receiver
+- t can be struct or non struct type
+- must be declared in the same package as the type
+- pointer receivers allow the values of the type to be changed
+    - most common to use pointer receivers so you can modify values
+    - non-ptr doesn't since functions are all pass by value
+        - ie it will make an entire copy of the type (even though it's being called on and not a parameter itself)
+    - generally: type's methods should be all ptr or all non-ptr
+        - can't make methods with the same name for t and *t
+- go automatically calls pointer receiver methods when calling on actual types
+    - and conversly calls receiver methods for pointer types
+    - specifically for receiver methods not for arguments
+- eg:
+    ```
+    type Vertex struct {
+        X, Y float64
+    }
+    // type MyFloat float64     // non struct type
 
-        func (v Vertex) Abs() float64 {
-	        return math.Sqrt(v.X*v.X + v.Y*v.Y)
-        }
+    func (v Vertex) Abs() float64 {
+        return math.Sqrt(v.X*v.X + v.Y*v.Y)
+    }
         
-        v.Abs() // usable method
+    v.Abs() // usable method
+    ```
 ## interfaces, interface type
+    ```
     type <Name> interface {
         <MethodName> <methodType>
     }
     func (<t> *<ImplementingType>) <MethodName> () {
         ...
     }
-    a set of method signatures
-    implicitly implemented: don't declare that an interface is implemented
-    a value of interface type can hold any value that implements those methods
-    if defined on *type, type can not be held by the interface type
-    interface type can hold *type if type implements the methods
-    under the hood: interface types are like a tuple of value and concrete type
-        (value, type)
-        calling a method on the value executes the method of the same name on the type
-    if the underlying value is nil, the method is still called
-        common to write methods which gracefully handle nil receivers
-        an interface value is non-nil if it holds a concrete value even if that value is nil
+    ```
+- a set of method signatures
+- implicitly implemented: don't declare that an interface is implemented
+- a value of interface type can hold any value that implements those methods
+- if defined on *type, type can not be held by the interface type
+- interface type can hold *type if type implements the methods
+- under the hood: interface types are like a tuple of value and concrete type
+    - (value, type)
+    - calling a method on the value executes the method of the same name on the type
+- if the underlying value is nil, the method is still called
+    - common to write methods which gracefully handle nil receivers
+    - an interface value is non-nil if it holds a concrete value even if that value is nil
 ## empty interface
-    interface{}
-    eg
-        var i interface{}
-        func def(i interface{}) { fmt.Printf("(%v, %T)\n", i, i) }
-    holds value of any type
-    used when the code handles values of unknown type
+- ```interface{}```
+- eg:
+    ```
+    var i interface{}
+    func def(i interface{}) { fmt.Printf("(%v, %T)\n", i, i) }
+    ```
+- holds value of any type
+- used when the code handles values of unknown type
 ## type assertions
     foo := <InterfaceType>.(<SomeType>)     // panic assertion
     foo, ok := <InterfaceType>.(<SomeType>) // non panic assertion
